@@ -1,0 +1,50 @@
+// push overlay
+#dashboard-push-overlay.icon-overlay.yui3-overlay-loading
+  .yui3-widget-hd
+  .yui3-widget-bd
+    .tabs
+      .tab(data-date='yesterday')
+        .inner Yesterday
+      .tab(data-date='today').active
+        .inner Today
+      .tab(data-date='tomorrow')
+        .inner Tomorrow
+
+    table#queries-list
+      thead
+        tr
+          th Planned Hour
+          th Caller
+          th Ticket
+          th Server
+          th Page
+          th Type
+      tbody
+        tr.none
+          td(colspan='6') Nothing planned for today
+
+    .notice
+      .icon
+      p This list is refreshed automatically every 10 seconds.
+      span.loader
+
+    .filters
+      h5 Filters:
+      label
+        input(type='checkbox', id='filter_pushed')
+        span(data-filter='pushed') Already Pushed
+
+    .details(style='display:none')
+      .outer
+        .inner
+          .separator
+          .files
+            h4 Files
+            ul
+          .comment
+            h4 Caller's Comment
+            p
+          .actions
+            input(type='text', id='push-cancel-reason', placeholder='State your reason', style='visibility:hidden;')
+            span.no
+            span.yes

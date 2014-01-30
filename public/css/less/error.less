@@ -1,0 +1,36 @@
+.biscuit-error {
+    position:absolute;
+    top:0;
+    height:100px;
+    background:#000;
+    left:0;
+    right:0;
+    width:100%;
+    color:#fff;
+    background:rgba(4, 6, 45, .6);
+    background:-webkit-gradient(linear, left bottom, left top, color-stop(0, rgba(0, 0, 0, .5)), color-stop(1, rgba(13, 27, 100, .9))) no-repeat center,
+		-webkit-gradient(radial, center center, 0, center center, 600, from(rgba(255, 255, 255, 0)), to(rgba(13, 27, 100, .2)), color-stop(0, rgba(0, 215, 255, 1)));
+    display:-webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-orient:vertical;
+    -webkit-box-align:center;
+    border-bottom:1px solid rgba(211, 232, 236, .3);
+    -webkit-box-shadow:0 10px 20px 0px rgba(30, 144, 255, .5);
+    -webkit-mask-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(0, rgba(255, 255, 255, 0)), color-stop(0.5, rgba(255, 255, 255, 1)), color-stop(1, rgba(255, 255, 255, 0)));
+
+    -webkit-animation-name: drop;
+    -webkit-animation-duration: .5s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-direction: linear;
+}
+
+.biscuit-error:before {
+    content: ' ';
+    width:48px;
+    height:48px;
+    display:inline-block;
+    vertical-align:middle;
+    background:url(@image_warning) no-repeat left center;
+    margin:0 10px;
+    opacity:1;
+}

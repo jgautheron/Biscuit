@@ -1,0 +1,160 @@
+.button {
+    font-family:DroidSans;
+    cursor:pointer;
+    overflow:hidden;
+    white-space:nowrap;
+
+    .dark {
+        background-image:-webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(0,116,183)), color-stop(1, rgb(0,155,244)));
+        letter-spacing:0px;
+        border:0;
+        border:1px solid rgb(0,116,183);
+        -webkit-box-shadow:inset 0px 0px 1px 0px #fff;
+        -webkit-border-radius:5px;
+        padding:10px 15px;
+        color:#fff;
+        -webkit-box-reflect:below 2px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.5, transparent), to(rgba(255, 255, 255, 0.2)));
+    }
+
+    .dark:hover {
+        border:1px solid #23619D;
+    }
+
+    .dark:active {
+        background-image:-webkit-gradient(linear, left bottom, left top, color-stop(0, #333), color-stop(1, #666));
+        -webkit-box-shadow:inset 0px 0px 1px 0px #fff;
+        border:1px solid #333;
+    }
+
+    .big {
+        font-size:20px;
+    }
+}
+
+/* toolbar buttons */
+.biscuit-toolbar {
+    .button {
+        background:rgba(0,0,0,.8);
+        background-image:-webkit-gradient(linear, left bottom, left top, color-stop(0, rgba(227,234,238,1)), color-stop(1, rgba(242,245,247,1)));
+        border:1px solid #b3c5d1;
+        display:inline-block;
+        padding:5px 10px;
+        -webkit-box-shadow: 0px 1px 0px #f3f3f3;
+        -webkit-border-radius:5px;
+        font:normal .8em DroidSans;
+        color:#435d6f;
+        vertical-align:middle;
+        cursor:pointer;
+        -webkit-transition:background 0.3s ease-in-out;
+
+        &:hover {
+            color:#fff;
+            border-color:transparent;
+            background:transparent;
+            background-image:-webkit-gradient(linear, left bottom, left top, color-stop(0, rgba(0,128,201,0.8)), color-stop(1, rgba(0,155,244,0.8)));
+        }
+
+        &:active, &.active {
+            background-image:-webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(0,116,183)), color-stop(1, rgb(0,155,244)));
+            color:#fff;
+            border-color:transparent;
+            -webkit-box-shadow: 1px 1px 0px #fff;
+        }
+
+        &.highlight {
+            -webkit-animation-name:buttonHighlight;
+            -webkit-animation-duration:0.3s;
+            -webkit-animation-direction:alternate;
+            -webkit-animation-iteration-count:4;
+            -webkit-animation-timing-function:linear;
+        }
+    }
+
+    .button.lock {
+        span {
+            width:16px;
+            height:16px;
+            display:block;
+            background-size:100% 100%;
+            background-image:url(@image_lock);
+        }
+        &:hover span, &.active span {
+            background-image:url(@image_lock_hover);
+        }
+    }
+
+    .button.save {
+        span {
+            width:16px;
+            height:16px;
+            display:block;
+            background-size:100% 100%;
+            background-image:url(@image_save);
+        }
+        &:hover span {
+            background-image:url(@image_save_hover);
+        }
+    }
+
+    .button.compile {
+        span {
+            width:16px;
+            height:16px;
+            display:block;
+            background-size:100% 100%;
+            background-image:url(@image_compile);
+        }
+        &:hover span {
+            background-image:url(@image_compile_hover);
+        }
+        &.compiling {
+
+            border-color:transparent;
+            background:transparent;
+            background-image:-webkit-gradient(linear, left bottom, left top, color-stop(0, rgba(0,128,201,0.8)), color-stop(1, rgba(0,155,244,0.8)));
+            
+            span {
+                -webkit-animation-name:spinnerRotate;
+                -webkit-animation-duration:1.5s;
+                -webkit-animation-iteration-count:infinite;
+                -webkit-animation-timing-function:linear;
+                background-image:url(@image_compile_hover);
+            }
+        }
+    }
+
+    .button.push {
+        span {
+            width:25px;
+            height:16px;
+            display:block;
+            background-size:100% 100%;
+            background-image:url(@image_push);
+        }
+        &:hover span {
+            background-image:url(@image_push_hover);
+        }
+    }
+
+    .biscuit-breadcrumb {
+        .button:not(:first-child):not(:last-child) {
+            -webkit-border-radius:0;
+            border-left:0;
+        }
+
+        .button:first-child {
+            -webkit-border-top-right-radius:0;
+            -webkit-border-bottom-right-radius:0;
+        }
+
+        .button:last-child {
+            -webkit-border-top-left-radius:0;
+            -webkit-border-bottom-left-radius:0;
+            border-left:0;
+        }
+
+        .button:first-letter {
+            text-decoration:none;
+        }
+    }
+}

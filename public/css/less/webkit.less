@@ -1,0 +1,25 @@
+.biscuit-webkit {
+    display:-webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-orient:vertical;
+    -webkit-box-align:stretch;
+    text-align:center;
+    -webkit-box-flex:1;
+
+    h1 {
+        background:url(../images/chrome.png) no-repeat center center;
+        display:block;
+        margin:0 auto;
+        width:600px;
+        height:512px;
+        position:relative;
+        top:0;
+        padding-bottom:3em;
+        &:after {
+    		content:"This application is optimized for Google Chrome. Only.";
+    		font-size:24px;
+    		font-family:VegurLight, Georgia;
+            color:#333;
+		}
+    }
+}

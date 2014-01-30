@@ -1,0 +1,71 @@
+// loading block
+section.biscuit-loading
+  .biscuit-loading-inner
+    div
+      h1= 'Biscuit'
+      h2= 'loading'
+      .spinner
+
+button(onclick='window.webkitNotifications.requestPermission();', style='display:none') Allow desktop notifications
+
+.main-wrapper
+  header
+    div.title-bar
+      span welcome to biscuit
+      .links
+        a(href='/dashboard').dashboard
+    .biscuit-tabs
+      .new &nbsp;
+      ul
+
+    nav.biscuit-toolbar
+      ul.biscuit-breadcrumb.context-editor
+        li.button.contents.active Contents
+        li.button.settings Settings
+        li.button.history History
+
+      .version
+        .icon
+        select.template(style='display:none')
+        select.templatetype(style='display:none')
+
+      .right
+        a.button.lock
+          span
+        span.spacer-3
+        span.context-template
+          a.button.save
+            span
+          span.spacer
+          a.button.compile.hide
+            span
+          span.spacer-3
+          a.button.push
+            span
+          span.spacer-2
+          a.button.more »
+  div.content
+    div.editor-wrapper
+      .biscuit-editor-left-gutter
+        div.template-list-wrapper
+          ul.template-list
+          menu.template-actions
+            li.add
+            li.del
+            li.properties
+            li.language
+      .biscuit-editor
+
+!=partial('partials/editor/overlay')
+
+script(src='http://cdn.socket.io/stable/socket.io.js')
+script(src='/js/yui-min.js')
+script(src='/js/3rdparty/codemirror/codemirror.js')
+script(src='/js/3rdparty/codemirror/zen_codemirror.min.js')
+script
+  var Biscuit = {};
+  Biscuit.Locator = !{locator};
+  Biscuit.User = "!{user}";
+  Biscuit.UserLevel = "!{userlevel}";
+
+script(src='/js/editor-concat.js')

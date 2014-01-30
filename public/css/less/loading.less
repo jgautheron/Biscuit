@@ -1,0 +1,46 @@
+/* loading screen */
+.biscuit-loading {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:999;
+    background:#fff;
+    .biscuit-loading-inner {
+        background:-webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(255,255,255)), color-stop(0.8, rgb(238,238,238))) no-repeat;
+        height:400px;
+        padding-top:15%;
+
+        div {
+            font-family:VegurLight;
+            width:200px;
+            text-align:center;
+            margin:0 auto;
+        }
+
+        h1 {
+            color:#1d7f8e;
+            font-size:72px;
+        }
+
+        h2 {
+            color:#b4b4b4;
+            font-size:30px;
+            letter-spacing:2px;
+            margin:-25px 0  0 80px;
+        }
+
+        .spinner {
+            margin-top:20px;
+            width:3em;
+            height:3em;
+            background-image:url(@image_spinner);
+            -webkit-background-size:100%;
+            -webkit-animation-name:spinnerRotate;
+            -webkit-animation-duration:1.5s;
+            -webkit-animation-iteration-count:infinite;
+            -webkit-animation-timing-function:linear;
+        }
+    }
+}

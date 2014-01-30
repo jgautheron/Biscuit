@@ -1,0 +1,47 @@
+var rest     = require('ahr'),
+    manifest = require('../services/locator.js');
+
+var BASE_URI = manifest.rest.BASE_URI;
+
+var formatResponse = function(event, data, error) {
+    var response = {
+        'event' : event,
+        'error' : error || '', // e.g. 400
+        'data'  : data
+    };
+    return response;
+};
+
+var sendResponse = function(event, data, error) {
+    var response = formatResponse(event, data, error);
+    this.send(JSON.stringify(response));
+};
+
+exports.proxy = function(service, data) {
+    var that = this;
+    var uri    = BASE_URI + service.route,
+        method = service.method;
+
+    // check arguments if any
+    if ('params' in service) {
+        //if (data['params'].indexOf(service.param
+        service['params'].forEach(function(value, key) {
+            if (!value in data['params']) {
+                throw new Error('missing parameter');
+            }
+            uri += '/' + value + '/' + data['params'][value];
+        });
+    }
+
+    var req = rest[service.method](uri, {}, {timeout: 10000})
+    .when(function (error, Xhr_Or_NodeResponse, body) {
+        var res = JSON.parse(body);
+        data = ('data' in res && res['data'].length > 0) ? res['data'] : null;
+        if (data === null) {
+            error = 'NO_DATA';
+        }
+        sendResponse.call(that, service.name, data, error);
+    });
+};
+
+exports.manifest = manifest;

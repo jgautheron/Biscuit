@@ -1,0 +1,137 @@
+.yui3-propertyeditor-panel {
+    display:inline-block;
+}
+
+.yui3-propertyeditor-table {
+    font-size:11px;
+    font-family:helvetica, arial, sans-serif;
+    border:1px solid #ccc;
+    width:420px;
+    table-layout:fixed;
+    border-collapse:collapse;
+    background:#fff;
+
+    tbody tr:first-of-type td {
+        border-top:0;
+    }
+
+    tbody:not(.yui3-propertyeditor-group) td:nth-of-type(2) {
+        border-right:0;
+    }
+
+    tbody.yui3-propertyeditor-group td:nth-of-type(2) {
+        border-right:0 !important;
+    }
+
+    th, td {
+        text-align:left;
+        height:20px;
+    }
+
+    th {
+        background:#116eb3 -webkit-gradient(linear, left bottom, left top, color-stop(0, #116eb3), color-stop(1, #1d87c4)) no-repeat;
+        font-weight:bold;
+        color:#fff;
+        text-shadow: rgba(0, 0, 0, 0.4) 0 -1px 0px;
+        border-right-color:#2498cb;
+        vertical-align:middle;
+
+        &:first-child {
+            width:1.5em;
+        }
+        &:not(:first-child) {
+            width:10em;
+        }
+        &:first-of-type {
+            border-right:0;
+            white-space:nowrap;
+        }
+    }
+
+    td {
+        /*border-right:1px solid #ccc;*/
+        border-top:1px solid #eee;
+        padding:1px 5px;
+
+        &:nth-of-type(n+2).active {
+            -webkit-box-shadow:0 0 15px #74ccfc;
+            outline:1px solid #76aecc;
+            padding:0;
+        }
+        &:nth-of-type(n+2) select {
+            font-size:11px;
+            padding: 0.5em 1em 0.5em 0.75em;
+            background: #fff url(@propgrid_select) no-repeat right center;
+            -webkit-background-size: 1600px 30px;
+            margin:0;
+            padding:0;
+            height:20px;
+            width:100%;
+            outline:0;
+            -webkit-appearance: none;
+        }
+        &:nth-of-type(n+2) input[type=text] {
+            -webkit-appearance:none;
+            -moz-appearance:none;
+            outline:0;
+            width:100%;
+            border:0;
+        }
+        &:nth-of-type(n+2) input[type=number] {
+            -webkit-appearance:none;
+            -moz-appearance:none;
+            outline:0;
+            width:100%;
+            border:0;
+            height:20px;
+            padding:0;
+            margin:0;
+        }
+        &:nth-of-type(n+2) input[type=number]::-webkit-inner-spin-button {
+            position:relative;
+            top:-1px;
+            right:-2px;
+            margin:0;
+        }
+        
+        &:first-of-type {
+            border-right:0;
+            white-space:nowrap;
+        }
+    }
+
+    .yui3-propertyeditor-group > td:first-of-type a:before {
+        content:"\25ba\20";
+    }
+
+    .yui3-propertyeditor-group > td:first-of-type a {
+        text-decoration:none;
+        font-size:0.8em;
+        color:#666;
+        cursor:pointer;
+    }
+
+    .yui3-propertyeditor-group.collapsed tr:not(:first-child) {
+        display:none;
+    }
+
+    .yui3-propertyeditor-group.collapsed tr:not(:first-child) td:not(.active):nth-of-type(2) {
+        padding-left:20px;
+    }
+
+    .yui3-propertyeditor-group.expanded > td:first-of-type a:before {
+        content:"\25bc\20";
+    }
+
+    .yui3-propertyeditor-group.expanded tr:not(:first-child) {
+        display:table-row;
+    }
+
+    .yui3-propertyeditor-group.expanded > td:first-of-type a:before {
+        content:"\25bc\20";
+    }
+
+    .yui3-propertyeditor-group.expanded tr:not(:first-child) {
+        display:table-row;
+    }
+}

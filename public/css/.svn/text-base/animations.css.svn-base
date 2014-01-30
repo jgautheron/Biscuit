@@ -1,0 +1,38 @@
+@-webkit-keyframes drop {
+    from {
+        opacity:0;
+        top:-100px;
+    }
+    to {
+        top:0;
+        opacity:1;
+    }
+}
+
+@-webkit-keyframes spinnerRotate {
+    from {
+        -webkit-transform:rotate(0deg);
+    }
+    to {
+        -webkit-transform:rotate(360deg);
+    }
+}
+
+@-webkit-keyframes colorSwitcher {
+    from {
+        background-color:#fff;
+    }
+    to {
+        background-color:#ddd;
+    }
+}
+
+@-webkit-keyframes buttonHighlight {
+    from {
+        border:1px solid #b3c5d1;
+    }
+    to {
+        border-color:transparent;
+        background:#ca9e46 -webkit-gradient(linear, left bottom, left top, color-stop(0, #ca9e46), color-stop(1, #f3eb80)) no-repeat;
+    }
+}

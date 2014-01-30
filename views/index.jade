@@ -1,0 +1,132 @@
+// loading block
+section.biscuit-loading
+  .biscuit-loading-inner
+    div
+      h1= 'Biscuit'
+      h2= 'loading'
+      .spinner
+
+button(onclick='window.webkitNotifications.requestPermission();', style='display:none') Allow desktop notifications
+
+.main-wrapper
+  header
+    div.title-bar
+      span welcome to biscuit
+    .biscuit-tabs
+      .new &nbsp;
+      ul
+
+    nav.biscuit-toolbar
+      ul.biscuit-breadcrumb.context-editor
+        li.button.contents.active Contents
+        li.button.settings Settings
+        li.button.history History
+
+      .version
+        .icon
+        select.template(style='display:none')
+        select.templatetype(style='display:none')
+
+      .right
+        a.button.lock
+          span
+        span.spacer-3
+        span.context-template
+          a.button.save
+            span
+          span.spacer
+          a.button.compile(style='display:none')
+            span
+          span.spacer-3
+          a.button.push
+            span
+          span.spacer-2
+          a.button.more »
+  div.content
+    div.editor-wrapper
+      .biscuit-editor-left-gutter
+        div.template-list-wrapper
+          ul.template-list
+          menu.template-actions
+            li.add
+            li.del
+            li.properties
+            li.language
+      .biscuit-editor
+
+// template add language overlay
+#addlanguage-overlay.yui3-overlay-loading
+  .yui3-widget-bd
+
+// toolbar more overlay
+#more-overlay.context-overlay.yui3-overlay-loading
+  .yui3-widget-bd
+
+// server overlay
+#server-overlay.yui3-overlay-loading
+  .yui3-widget-hd
+    span.close
+    h6
+      span.server.active Pick a server
+      span.page Pick a page
+  .yui3-widget-bd
+    ul.server-list
+    ul.page-list
+
+  .yui3-widget-ft
+    .recent
+      h6 &nbsp;
+      ul.content
+    .search
+      input(placeholder='Search…')
+
+// settings overlay
+#settings-overlay.editor-overlay.yui3-overlay-loading
+  .yui3-widget-bd
+    .tpl-type-container
+      select.tpl-type
+    .yui3-propertyeditor-panel
+      table.yui3-propertyeditor-table
+
+// transparent overlay
+#transparent-overlay.yui3-overlay-loading
+  .yui3-widget-bd
+
+// lock overlay
+#lock-overlay.prompt-overlay.yui3-overlay-loading
+  .yui3-widget-hd Lock System
+  .yui3-widget-bd
+    div
+      h4 Which level should be locked?
+      p
+        label
+          input(type='radio', id='lock_type_1', name='lock_type', value='1')
+          | Server
+        label
+          input(type='radio', id='lock_type_2', name='lock_type', value='2')
+          | Page
+        label
+          input(type='radio', id='lock_type_3', name='lock_type', value='3', checked='checked')
+          | Template
+      h4.spacer-1 Why?
+      p
+        textarea(id='lock_msg')
+  .yui3-widget-ft.clearfix
+    div.right
+      button(id='lock_cancel') Cancel
+      button(id='lock_submit') Submit
+
+// yui3 console
+#yconsole
+
+script(src='http://cdn.socket.io/stable/socket.io.js')
+script(src='/js/yui-min.js')
+script(src='/js/3rdparty/codemirror/codemirror.js')
+script(src='/js/3rdparty/codemirror/zen_codemirror.min.js')
+script
+  var Biscuit = {};
+  Biscuit.Locator = !{locator};
+  Biscuit.User = "!{user}";
+  Biscuit.UserLevel = "!{userlevel}";
+
+script(src='/js/biscuit-concat.js')

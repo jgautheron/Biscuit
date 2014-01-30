@@ -1,0 +1,27 @@
+.main-wrapper {
+
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-box-flex:1;
+    -webkit-box-pack:start;
+    -webkit-box-align:stretch;
+
+    height: auto;
+
+    header {
+        .title-bar {
+            height:34px;
+            padding-left:1em;
+            background:#116eb3 -webkit-gradient(linear, left bottom, left top, color-stop(0, #116eb3), color-stop(1, #1d87c4)) no-repeat;
+            border-top:1px solid #80cdfa;
+            span {
+                color:#fff;
+                font:1.3em VegurLight;
+                position:relative;
+                top:-2px;
+                -webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(255,255,255,1)));
+                text-shadow:0px 1px 0px #2d83b6;
+            }
+        }
+    }
+}

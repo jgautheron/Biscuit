@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty
+END
+socket.io.js
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/socket.io.js
+END
+diff_match_patch.js
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/diff_match_patch.js
+END

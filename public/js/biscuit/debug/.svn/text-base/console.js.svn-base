@@ -1,0 +1,5 @@
+var console = new Y.Console({
+    width: '250px'
+})
+.plug(Y.Plugin.Drag, { handles: ['.yui3-console-hd'] })
+.render('#yconsole');

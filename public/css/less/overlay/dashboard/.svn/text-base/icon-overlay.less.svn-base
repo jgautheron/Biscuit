@@ -1,0 +1,38 @@
+.icon-overlay {
+    background-image:-webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(194,194,194)), color-stop(1, rgb(220,220,220)));
+    width:32em;
+    -webkit-border-radius:5px;
+    -webkit-box-shadow:0 0 1em rgba(0, 0, 0, 0.3);
+    .yui3-widget-hd {
+        font-size:0;
+        height:2px;
+        overflow:hidden;
+        border-bottom:8px solid #999;
+        cursor:move;
+    }
+    .yui3-widget-bd {
+        padding:1em;
+        font:normal 12px DroidSans;
+        position:relative;
+        min-height:25em;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    ::-webkit-scrollbar-track-piece {
+        background-color:transparent;
+    }
+
+    ::-webkit-scrollbar-thumb:vertical {
+        max-height: 50px;
+        background-color: #d0dae2;
+        -webkit-border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:vertical:active {
+        background-color:#b3c5d1;
+    }
+}

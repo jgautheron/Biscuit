@@ -1,0 +1,273 @@
+@import url('/css/reset.css');
+@import url('/css/yui.css');
+@import url('/css/animations.css');
+
+@import 'public/css/less/contents.less';
+@import 'public/css/less/fonts.less';
+@import 'public/css/less/gradients.less';
+
+html, body {
+    height:100%;
+    vertical-align:top;
+    display:-webkit-box;
+    -webkit-box-pack:center;
+    -webkit-box-orient:vertical;
+    -webkit-box-align:stretch;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+
+@import 'public/css/less/buttons.less';
+@import 'public/css/less/scrollbars.less';
+
+@import 'public/css/less/loading.less';
+@import 'public/css/less/error.less';
+@import 'public/css/less/auth.less';
+
+@import 'public/css/less/layout.less';
+
+
+/* editor wrapper */
+@editor-left-gutter-width:210px;
+
+content {
+
+    display:-webkit-box;
+    -webkit-box-flex:1;
+    -webkit-box-pack:start;
+    -webkit-box-orient:horizontal;
+    -webkit-box-align:stretch;
+
+    .editor-wrapper {
+
+        display:-webkit-box;
+        -webkit-box-orient:horizontal;
+        -webkit-box-align:stretch;
+        -webkit-box-flex:1;
+
+        /* Editor */
+
+        .biscuit-editor {
+            background:#fff;
+            display:-webkit-box;
+
+            -webkit-box-align:stretch;
+            -webkit-box-orient:vertical;
+            -webkit-box-flex:1;
+
+            padding:10px;
+            border-left:1px solid #bdccd7;
+
+            .CodeMirror-wrapping {
+                display:-webkit-box;
+                -webkit-box-align:stretch;
+                -webkit-box-orient:vertical;
+                -webkit-box-flex:1;
+
+                iframe {
+                    display:-webkit-box !important;
+                    -webkit-box-align:stretch;
+                    -webkit-box-orient:vertical;
+                    -webkit-box-flex:1;
+                    height:auto !important;
+                    overflow-x:hidden;
+                    overflow-y:auto;
+                }
+            }
+        }
+
+        /* Gutter */
+        .biscuit-editor-left-gutter {
+
+            background:#ebedef;
+            width:@editor-left-gutter-width;
+            height:auto;
+            display:-webkit-box;
+            -webkit-box-align:stretch;
+            -webkit-box-orient:vertical;
+
+            .template-list-wrapper {
+                overflow-x:hidden;
+                overflow-y:auto;
+                height:auto;
+                display:-webkit-box;
+                -webkit-box-align:stretch;
+                -webkit-box-orient:vertical;
+                -webkit-box-flex:1;
+                position:relative;
+                padding-bottom:50px;
+
+                .template-actions {
+                    position:fixed;
+                    left:0;
+                    right:0;
+                    bottom:0;
+                    width:@editor-left-gutter-width;
+                    list-style:none;
+                    display:block;
+                    border-top:1px solid #c8cdd1;
+                    height:40px;
+                    background:#ebedef;
+                    -webkit-box-shadow:-1px -5px 10px -1px #ccc;
+
+                    display:-webkit-box;
+                    -webkit-box-orient:horizontal;
+                    -webkit-box-flex:1;
+                    -webkit-box-pack:left;
+                    -webkit-box-align:stretch;
+
+                    li {
+                        width:40px;
+                        height:40px;
+                        display:-webkit-box;
+                        -webkit-box-orient:horizontal;
+                        -webkit-box-pack:center;
+                        border-right:1px solid #c8cdd1;
+                    }
+
+                    li.add {
+                        background:url(@icon_add) no-repeat center center;
+                        -webkit-background-size:25%;
+                    }
+
+                    li.del {
+                        background:url(@icon_del) no-repeat center center;
+                        -webkit-background-size:25%;
+                    }
+
+                    li.properties {
+                        background:url(@icon_cfg) no-repeat center center;
+                        -webkit-background-size:30%;
+                    }
+                }
+
+                .template-list {
+                    margin:5px 0 10px 0;
+                    font-size:11px;
+                    list-style:none;
+                    color:#333;
+                    font-weight:normal;
+
+                    li {
+                        padding:0 0 0 15px;
+                        border:1px solid transparent;
+                        cursor:pointer;
+                        height:20px;
+                        color:#666;
+                        line-height:20px;
+                        vertical-align:middle;
+                        position:relative;
+
+                        select {
+                            display:none;
+                            right:15px;
+                            font-size:11px;
+                            -webkit-appearance:none;
+                            -webkit-border-radius:15px;
+                            background-color:transparent;
+                            outline:none;
+                            font-family:DroidSans;
+                            padding:1px;
+                        }
+
+                        input[type="text"] {
+                            background:none;
+                            border:none;
+                            color:#fff;
+                            outline:none;
+                            -webkit-appearance:none;
+                            font-family:DroidSans;
+                            font-size:11px;
+                        }
+
+                        &.active {
+                            background-image:-webkit-gradient(linear, left bottom, left top, color-stop(0, #5c6c7d), color-stop(1, #8c9daf));
+                            border-top:1px solid #5c6c7d !important;
+                            border-bottom:1px solid #5c6c7d !important;
+                            color:#fff !important;
+                            position:relative;
+
+                            select {
+                                display:none;
+                                cursor:pointer;
+                                opacity:.5;
+                                color:#fff;
+                            }
+
+                            select:focus {
+                                background-image:@gradient-list-item-active;
+                                opacity:1;
+                            }
+
+                            select:focus option {
+                                color:#333;
+                            }
+                            
+                        }
+
+                        span {
+                            overflow:hidden;
+                            text-overflow:ellipsis;
+                            display:inline-block;
+                            width:150px;
+                            color:#333;
+                        }
+
+                        &.active span {
+                            color:#fff;
+                        }
+
+                        &.active.editable {
+                            color:#000 !important;
+                            margin-left:10px;
+                            padding-left:5px;
+                            margin-right:10px;
+
+                            -webkit-box-shadow: inset 0 1px 5px rgba(0, 0, 0, .3) !important;
+                            -webkit-border-radius:15px !important;
+                            -webkit-border-radius-style: flat;
+                            border:1px inset #999 !important;
+                            background:#fff !important;
+
+                            -webkit-transition: color .8s ease-in;
+                        }
+
+                        &.editable input {
+                            color:#000 !important;
+                        }
+
+                    }
+                }
+                
+            }
+
+        }
+
+
+        /* Scrollbars */
+        ::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        ::-webkit-scrollbar-track-piece {
+            background-color:transparent;
+        }
+
+        ::-webkit-scrollbar-thumb:vertical {
+            max-height: 50px;
+            background-color: #d0dae2;
+            -webkit-border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:vertical:active {
+            background-color:#b3c5d1;
+        }
+    }
+}
+
+
+/*@import 'public/css/less/editor.less';*/
+@import 'public/css/less/tabs.less';
+@import 'public/css/less/toolbar.less';
+
+@import 'public/css/less/overlay/top-nav-list.less';
+@import 'public/css/less/overlay/context-overlay.less';

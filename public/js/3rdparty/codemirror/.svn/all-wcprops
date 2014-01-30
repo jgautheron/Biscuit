@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror
+END
+undo.js
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/undo.js
+END
+codemirror.js
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/codemirror.js
+END
+highlight.js
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/highlight.js
+END
+util.js
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/util.js
+END
+tokenizejavascript.js
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/tokenizejavascript.js
+END
+select.js
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/select.js
+END
+stringstream.js
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/stringstream.js
+END
+parsecss.js
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/parsecss.js
+END
+mirrorframe.js
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/mirrorframe.js
+END
+parsehtmlmixed.js
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/parsehtmlmixed.js
+END
+parsedummy.js
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/parsedummy.js
+END
+editor.js
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/editor.js
+END
+tokenize.js
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/tokenize.js
+END
+parsexml.js
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/parsexml.js
+END
+parsesparql.js
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/parsesparql.js
+END
+parsejavascript.js
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/parsejavascript.js
+END
+unittests.js
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/unittests.js
+END
+zen_codemirror.min.js
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/22391/biscuit/public/js/3rdparty/codemirror/zen_codemirror.min.js
+END

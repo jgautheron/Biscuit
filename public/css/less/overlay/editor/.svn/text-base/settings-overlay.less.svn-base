@@ -1,0 +1,7 @@
+#settings-overlay {
+    .yui3-widget-bd {
+        .tpl-type-container {
+            margin-bottom:5px;
+        }
+    }
+}

@@ -1,0 +1,427 @@
+YUI.add('top-nav-overlay', function(Y) {
+    const SELECTION_CLASSNAME = 'selection',
+          BREADCRUMB_ACTIVE_CLASSNAME = 'active',
+          RECENT_SERVER_CLASSNAME = 'server',
+          RECENT_PAGE_CLASSNAME = 'page',
+          LIST_TEMPLATE = '<li data-id="{id}" data-text="{textlc}">{text}</li>',
+          RECENT_TEMPLATE = '<span data-id="" data-text="{textlc}">{text}</span>',
+          SERVER_LIST = 'server',
+          PAGE_LIST   = 'page',
+          KEY_ENTER = 13;
+
+    function TopNavigationListOverlay() {
+        this._initListOverlay();
+    }
+
+    TopNavigationListOverlay.prototype = {
+        _initListOverlay : function() {
+            this.listOverlay.parent = this;
+            this.listOverlay._init();
+        },
+
+        listOverlay : {
+            instance : null,
+
+            nodes : {},
+
+            current : {
+                'nodes' : {},
+                'type'  : null,
+                'count' : 0,
+                'searchresults' : {}
+            },
+
+            _init : function() {
+                this.app = this.parent.get('host');
+                this._render();
+            },
+
+            isVisible : function() {
+                return this.instance.getAttrs()['visible'] === true;
+            },
+
+            toggle : function(tabNode, type) {
+                if (!this.isVisible()) {
+                    this.show(tabNode, type);
+                } else {
+                    this.hide();
+                }
+            },
+
+            show : function(tabNode, type) {
+                switch (type) {
+                    case SERVER_LIST:
+                        this.showServerList();
+                        break;
+                    case PAGE_LIST:
+                        this.showPageList();
+                        break;
+                }
+
+                tabNode.addClass(SELECTION_CLASSNAME);
+
+                var WidgetPositionAlign = Y.WidgetPositionAlign;
+                console.log(this.instance);
+                this.instance.set('align', {node: tabNode, points:[WidgetPositionAlign.TL, WidgetPositionAlign.BL]});
+                this.instance.show();
+                Y.log('list opened', null, 'TopNavigationListOverlay');
+            },
+
+            hide : function() {
+                if (!this.isVisible()) {
+                    return;
+                }
+                this.instance.hide();
+                var node = this.parent.srcNode.one('li.' + SELECTION_CLASSNAME);
+                if (node) {
+                    node.removeClass(SELECTION_CLASSNAME);
+                }
+                Y.log('list closed', null, 'TopNavigationListOverlay');
+            },
+
+            _render : function() {
+                this.instance = new Y.Overlay({
+                    srcNode: '#server-overlay',
+                    visible: false,
+                    shim: false
+                });
+                this.instance.render();
+                Y.log('rendered server list overlay', null, 'TopNavigationListOverlay');
+
+                // defines the default state of the overlay
+                this._syncState();
+
+                // bind overlay events
+                this._bindEvents();
+            },
+
+            _bindEvents : function() {
+                var nodes = this.nodes;
+
+                // close icon
+                this.instance.headerNode.one('.close').on('topNavigationOverlay|click', Y.bind(this.hide, this));
+
+                // server breadcrumb
+                nodes.serverBc.on('topNavigationOverlay|click', this.showServerList, this);
+
+                // server search
+                nodes.searchField.on('topNavigationOverlay|keyup', Y.bind(this._onSearchInput, this));
+
+                // populate list
+                this.app.on('datastore:ready', Y.bind(this._populateServerList, this));
+
+                // server list item click
+                nodes.serverListContainer.delegate('topNavigationOverlay|click', Y.bind(this._onServerItemClick, this), 'li');
+
+                // page list item click
+                nodes.pageListContainer.delegate('topNavigationOverlay|click', Y.bind(this._onPageItemClick, this), 'li');
+
+                // page list from server event
+                this.app.gateway.listen(Biscuit.Locator.rest.services.page.list, Y.bind(this._populatePageList, this));
+
+                // overlay click outside
+                Y.one('#server-overlay').on('clickoutside',  Y.bind(this._clickOutside, this));
+            },
+
+            _syncState : function() {
+                // cache often called nodes
+                this.nodes = {
+                    serverListContainer : this.instance.bodyNode.one('.server-list'),
+                    pageListContainer   : this.instance.bodyNode.one('.page-list'),
+                    headerBc            : this.instance.headerNode.one('h6'),
+                    serverBc            : this.instance.headerNode.one('h6 .server'),
+                    pageBc              : this.instance.headerNode.one('h6 .page'),
+                    searchField         : this.instance.footerNode.one('.search input'),
+                    recentContainer     : this.instance.footerNode.one('.recent'),
+                    recentContent       : this.instance.footerNode.one('.recent .content')
+                };
+
+                // hide page list for now
+                this.nodes.pageListContainer.hide();
+
+                // hide breadcrumb
+                this.nodes.pageBc.hide();
+            },
+
+            _clickOutside : function(e) {
+                if (!this.isVisible()) {
+                    return;
+                }
+
+                var tab = e.target.ancestor('li.active');
+                if (tab) {
+                    return;
+                }
+
+                this.hide();
+            },
+
+            _onSearchInput : function(e) {
+                var input = e.currentTarget,
+                    value = input._node.value.toLowerCase().trim();
+
+                switch (e.keyCode) {
+                    case KEY_ENTER:
+                        if (this.current['count'] !== 1) {
+                            return;
+                        }
+
+                        switch (this.current['type']) {
+                            case 'server':
+                                var node = this.current['searchresults'].item(0),
+                                    id   = node.getAttribute('data-id'),
+                                    name = node.getAttribute('data-text');
+
+                                this._setServer(id, name);
+                                Y.log('enter key event detected & processed', null, 'TopNavigationListOverlay');
+                                break;
+                            case 'page':
+
+                                break;
+                        }
+                        return;
+                }
+
+                // display all nodes by default
+                this.current['nodes'].setStyle('display', 'block');
+
+                if (value === '') {
+                    Y.log('empty search query', null, 'TopNavigationListOverlay');
+                    return false;
+                }
+                if (!'_nodes' in this.current['nodes'] || this.current['nodes']._nodes.length <= 0) {
+                    Y.log('could not find any list node', 'warn', 'TopNavigationListOverlay');
+                    return false;
+                }
+                if (value.length >= 3) {
+                    Y.log('filtering list for query: ' + value, null, 'TopNavigationListOverlay');
+                    var nodeList = this.instance.bodyNode.all('.' + this.current['type'] + '-list > li:not([data-text*="' + value + '"])');
+                    nodeList.setStyle('display', 'none');
+                    this.current['count'] = this.current['nodes']._nodes.length - nodeList._nodes.length;
+                    this.current['searchresults'] = this.instance.bodyNode.all('.' + this.current['type'] + '-list > li[data-text*="' + value + '"]');
+                    if (this.current['count'] === 0) {
+                        Y.log('could not find any server for query: ' + value, null, 'TopNavigationListOverlay');
+                    }
+                }
+            },
+
+            _populateServerList : function() {
+                var html = [], i, node, servers = this.app.dataStore.data.server.list,
+                    serverList = this.nodes.serverListContainer;
+
+                for (i = 0; node = servers[i++];) {
+                    html.push(
+                        Y.Node.create(Y.substitute(LIST_TEMPLATE, {id: node['Server__'], text: node['Name'], textlc: node['Name'].toLowerCase()}))
+                    );
+                }
+                serverList.get('children').remove();
+                serverList.append(html);
+
+                // default state
+                this.current['nodes'] = this.nodes.serverList = Y.all(html);
+                this.current['type']  = 'server';
+                Y.log('populated server list', null, 'TopNavigationListOverlay');
+            },
+
+            _populatePageList : function(e, event, data, error) {
+                switch (error) {
+                    case 'NO_DATA':
+                        alert('no pages for this server tooltip');
+                        return;
+                }
+                var html = [], i, node, pages = data,
+                    pageList = this.nodes.pageListContainer;
+
+                for (i = 0; node = pages[i++];) {
+                    html.push(
+                        Y.Node.create(Y.substitute(LIST_TEMPLATE, {id: node['Page__'], text: node['Page__'], textlc: node['Page__'].toLowerCase()}))
+                    );
+                }
+                pageList.get('children').remove();
+                pageList.append(html);
+                this.nodes.pageList = Y.all(html);
+                Y.log('populated page list', null, 'TopNavigationListOverlay');
+
+                this.showPageList();
+            },
+
+            _updateRecent : function(type) {
+                var data = [];
+                switch (type) {
+                    case SERVER_LIST:
+                        data = this.getRecentServers();
+                        break;
+                    case PAGE_LIST:
+                        data = this.getRecentPages();
+                        break;
+                }
+
+                var container = this.nodes.recentContainer;
+
+                if (data.length > 0) { // if any
+                    var content = this.nodes.recentContent, html = [];
+                    container.show();
+                    data.forEach(function(val) {
+                        html.push(
+                            Y.Node.create(Y.substitute(RECENT_TEMPLATE, {id: val['id'], text: val['name'], textlc: val['name']}))
+                        );
+                    });
+                    content.get('children').remove();
+                    content.append(html);
+                } else { // if none
+                    container.hide();
+                }
+            },
+
+            _onServerItemClick : function(e) {
+                var el = e.currentTarget,
+                    serverId = el.getAttribute('data-id'),
+                    serverName = el.getAttribute('data-text');
+                this._setServer(serverId, serverName);
+            },
+
+            _onPageItemClick : function(e) {
+                var el = e.currentTarget,
+                    pageId = el.getAttribute('data-id'),
+                    pageName = el.getAttribute('data-text');
+                this._setPage(pageId, pageName);
+            },
+
+            _inStore : function(store, name) {
+                if (store.length === 0) {
+                    return;
+                }
+                store.forEach(function(o) {
+                    if (o['id'] === name) {
+                        return true;
+                    }
+                });
+                return false;
+            },
+
+            _storeServer : function(id, name) {
+                var localStore = this.app.localStore,
+                    servers = localStore.get(localStore.definitions.RECENT_SERVERS);
+
+                if (this._inStore(servers, id)) {
+                    return;
+                }
+
+                // config: maximum 5
+                if (servers.length === 5) {
+                    servers.pop();
+                }
+                servers.unshift({id : id, name : name});
+                localStore.set(localStore.definitions.RECENT_SERVERS, servers);
+            },
+
+            _storePage : function(id, name) {
+                var localStore = this.app.localStore,
+                    pages = localStore.get(localStore.definitions.RECENT_PAGES);
+
+                if (this._inStore(pages, id)) {
+                    return;
+                }
+
+                // config: maximum 5
+                if (pages.length === 5) {
+                    pages.pop();
+                }
+                pages.unshift({id : id, name : name});
+                localStore.set(localStore.definitions.RECENT_PAGES, pages);
+            },
+
+            _setServer : function(id, name) {
+                Y.log('picked server: ' + name, null, 'TopNavigationListOverlay');
+
+                // changes tab server id & text
+                this.parent.setServer(id, name);
+
+                // stores locally the server name
+                this._storeServer(id, name);
+
+                // ask server for page list
+                this.app.gateway.emit(Biscuit.Locator.rest.services.page.list, { 'params' : { 'Server__' : id }});
+            },
+
+            _setPage : function(id, name) {
+                Y.log('picked page: ' + id, null, 'TopNavigationListOverlay');
+
+                // changes page
+                this.parent.setPage(id, name);
+
+                // stores locally the page name
+                this._storePage(id, name);
+            },
+
+            _setCurrentList : function(type) {
+                var nodes = this.nodes;
+
+                switch (type) {
+                    case SERVER_LIST:
+                        nodes.recentContainer.replaceClass(RECENT_PAGE_CLASSNAME, RECENT_SERVER_CLASSNAME);
+                        this._updateRecent(SERVER_LIST);
+                        this.current['nodes'] = this.nodes.serverList;
+                        break;
+                    case PAGE_LIST:
+                        nodes.recentContainer.replaceClass(RECENT_SERVER_CLASSNAME, RECENT_PAGE_CLASSNAME);
+                        this._updateRecent(PAGE_LIST);
+                        this.current['nodes'] = this.nodes.pageList;
+                        break;
+                }
+
+                this.current['type']  = type;
+                this.current['nodes'].setStyle('display', 'block');
+
+                this.nodes.searchField._node.value = '';
+            },
+
+            getRecentServers : function() {
+                var localStore = this.app.localStore;
+                return localStore.get(localStore.definitions.RECENT_SERVERS);
+            },
+
+            getRecentPages : function() {
+                var localStore = this.app.localStore;
+                return localStore.get(localStore.definitions.RECENT_PAGES);
+            },
+
+            showServerList : function() {
+                var nodes = this.nodes;
+                this._setCurrentList(SERVER_LIST);
+
+                // if already active, do nothing
+                if (nodes.serverBc.hasClass(BREADCRUMB_ACTIVE_CLASSNAME)) {
+                    return;
+                }
+
+                nodes.pageListContainer.hide();
+                nodes.serverBc.addClass(BREADCRUMB_ACTIVE_CLASSNAME);
+                nodes.pageBc.removeClass(BREADCRUMB_ACTIVE_CLASSNAME).hide();
+                nodes.serverListContainer.show();
+
+                Y.log('displayed server list', null, 'TopNavigationListOverlay');
+            },
+
+            showPageList : function() {
+                var nodes = this.nodes;
+                this._setCurrentList(PAGE_LIST);
+
+                // if already active, do nothing
+                if (nodes.pageBc.hasClass(BREADCRUMB_ACTIVE_CLASSNAME)) {
+                    return;
+                }
+
+                nodes.serverListContainer.hide();
+                nodes.serverBc.removeClass(BREADCRUMB_ACTIVE_CLASSNAME);
+                nodes.pageListContainer.show();
+                nodes.pageBc.addClass(BREADCRUMB_ACTIVE_CLASSNAME).show();
+
+                Y.log('displayed page list', null, 'TopNavigationListOverlay');
+            }
+
+        }
+    };
+
+    Y.TopNavigationListOverlay = TopNavigationListOverlay;
+}, '3.2.0', {requires:['event-custom', 'event-key', 'substitute', 'overlay']});

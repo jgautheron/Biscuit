@@ -1,0 +1,54 @@
+#transparent-overlay {
+    .yui3-widget-bd {
+        background:rgba(204, 204, 204, 0.7);
+        height:100%;
+        position:relative;
+        .notice {
+            -webkit-box-shadow:0 0 2em rgba(0, 0, 0, 0.3);
+            border-top:1px solid #ccc;
+            position:absolute;
+            top:0;
+            right:0;
+            z-index:9999;
+            background:rgba(206, 217, 225, 1);
+            font-family:DroidSans;
+            text-align:right;
+            display:inline-block;
+            width:15%;
+            padding:1em;
+            h3 {
+                font-size:14px;
+                padding:2px;
+                display:inline-block;
+                span {
+                    background:#116EB3;
+                    color:#fff;
+                }
+            }
+            h4 {
+                font-size:13px;
+                margin:1em 0 .2em;
+            }
+            em {
+                font-size:11px;
+                color:#222;
+            }
+            p {
+                font-size:11px;
+                color:#222;
+                &.comment {
+                    background:#116EB3;
+                    color:#fff;
+                    padding:1px;
+                    display:inline;
+                }
+                &.spaced {
+                    margin:1em 0;
+                }
+            }
+        }
+        .avatar {
+            
+        }
+    }
+}
