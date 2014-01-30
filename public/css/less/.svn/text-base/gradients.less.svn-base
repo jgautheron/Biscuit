@@ -1,2 +1,0 @@
-@gradient-list-item:-webkit-gradient(linear, left bottom, left top, color-stop(1, rgb(0,155,244)), color-stop(0, rgb(0,116,183)));
-@gradient-list-item-active:-webkit-gradient(linear, left bottom, left top, color-stop(1, rgb(0,116,183)), color-stop(0, #0089d3));
