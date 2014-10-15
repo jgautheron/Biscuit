@@ -9,11 +9,3 @@ npm install hiredis redis
 npm install supervisor
 npm install spark2
 npm install useragent
-
-
-CREATE TABLE `tplv3`.`User_Lock`(     `Server__` INT UNSIGNED NOT NULL ,     `Page__` VARCHAR(100) ,     `Template__` VARCHAR(100) ,     `User` VARCHAR(100) NOT NULL ,     `Comment` TEXT ,     `Stamp` DATETIME ,     PRIMARY KEY (`Server__`)  )  ;
-
-
-CREATE TABLE `tplv3`.`Push_Queries`(     `Push_Query__` INT UNSIGNED NOT NULL AUTO_INCREMENT ,     `Server__` INT UNSIGNED NOT NULL ,     `Page__` VARCHAR(255) CHARSET utf8 COLLATE utf8_general_ci NOT NULL ,     `Date` DATETIME ,     `Type` VARCHAR(255) CHARSET utf8 COLLATE utf8_general_ci NOT NULL ,     `Ticket` INT UNSIGNED ,     `Comment` TEXT CHARSET utf8 COLLATE utf8_general_ci ,     `Files` TEXT CHARSET utf8 COLLATE utf8_general_ci NOT NULL ,     `Delivered` BOOL DEFAULT '0' ,     `Stamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,     PRIMARY KEY (`Push_Query__`)  )  ;
-
-ALTER TABLE `tplv3`.`Push_Queries`     CHANGE `Type` `Type` ENUM('PAGE','FOLDER','FOLDER_GROUP','ALL','ALL_GROUP') NOT NULL,     CHANGE `Ticket` `Ticket` INT(10) NULL ;
