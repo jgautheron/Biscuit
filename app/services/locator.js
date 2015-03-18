@@ -1,7 +1,7 @@
 exports.rest = {
     // rest platform configuration
 
-    BASE_URI        : 'http://tpleditor.devjgautheron.telechargement.fr:81/api/',
+    BASE_URI        : 'http://foo.com/api/',
     FORMATS         : ['xml','json'],
     DEFAULT_FORMAT  : 'json',
 
